@@ -179,7 +179,8 @@ li.uk-open>a>span>svg {display: none;}
 
 
 <script>
-var BASE_URL_API = 'http://localhost:8000/api';
+// var BASE_URL_API = 'http://localhost:8000/api';
+var BASE_URL_API = '{{ env('API_URL') }}';
 
 function createLine(obj){
   var actions = ''+
