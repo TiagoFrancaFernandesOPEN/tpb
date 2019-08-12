@@ -129,7 +129,11 @@ public function listMessages()
      */
     public function update(Request $request, $id)
     {
-        //
+        // $message = Message::find($id);
+        // if(isset($message))
+        // {
+
+        // }
     }
 
     /**

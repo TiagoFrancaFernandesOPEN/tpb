@@ -91,6 +91,10 @@ li.uk-open>a>span>svg {display: none;}
         <div class="uk-modal-body">
           <form>
             <fieldset class="uk-fieldset">
+              
+                <div class="uk-margin">
+                    <input id="messageId" class="uk-input" type="text" placeholder="Message Id">
+                </div>
 
                 <div class="uk-margin">
                   <div uk-form-custom="target: > * > span:last-child"> To: 
@@ -122,8 +126,8 @@ li.uk-open>a>span>svg {display: none;}
           </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-            <button class="uk-button uk-button-primary" type="button">Save</button>
+            <button id="messageCancelChanges" class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <button id="messageSaveChanges" class="uk-button uk-button-primary" type="button">Save</button>
         </div>
     </div>
 </div>
@@ -175,8 +179,6 @@ li.uk-open>a>span>svg {display: none;}
 
 
 <script>
-UIkit.modal(jQuery('#modal-form')).show();
-
 var BASE_URL_API = 'http://localhost:8000/api';
 
 function createLine(obj){
@@ -229,7 +231,27 @@ function deleteMessage(id){
   // });
 }
 
-function submit(id){
+function clearFormModalInputs(obj){
+  jQuery('#messageId').val('');
+  jQuery('#messageRecipient').val('');
+  jQuery('#messageSubject').val('');
+  jQuery('#messageContent').val('');
+  CKEDITOR.instances["messageContent"].setData('');
+}
+function formModalInputs(obj){
+  if(obj.length <= 0){
+    clearFormModalInputs();
+  // }else if(){
+  }else{
+    jQuery('#messageId').val(obj.id);
+    jQuery('#messageRecipient').val(obj.contact_id);
+    jQuery('#messageSubject').val(obj.subject);
+    jQuery('#messageContent').html(obj.message);
+    CKEDITOR.instances["messageContent"].setData(obj.message);
+  }
+}
+
+function submitMessage(id){
   jQuery.ajax({
   url: BASE_URL_API + '/message/submit/'+ id,
   type: 'POST'
@@ -255,6 +277,7 @@ function editMessage(id){
     dataType: 'json',
     success: function (data) {
       console.log(data);
+      formModalInputs(data);
       UIkit.modal(jQuery('#modal-form')).show();
         // for (var i = 0 ; i < data.length; i++) {
         //     console.log(data[i]);
@@ -282,6 +305,10 @@ function startAction(){
   jQuery('a.action-edit').click(function(){
     var itemId = jQuery(this).attr('itemRowId');
     editMessage(itemId);
+  });
+
+  jQuery('#messageCancelChanges').click(function(){
+    clearFormModalInputs();
   });
 }
 startAction();
