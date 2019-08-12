@@ -18,11 +18,16 @@
 .align-i-end{ text-align: end !important; }
 
 ul.uk-nav-sub.action_icons { width: max-content;}
+
+.cursor-pointer { cursor: pointer;}
+td.actionsMenu { text-align: center;}
+td.actionsMenu:hover {background: #1e87f029;}
+li.uk-open>a>span>svg {display: none;}
 </style>
 
 @php ($item = $messages)
 
-    <table class="uk-table uk-table-middle uk-table-divider uk-table-hover">
+    <table id="messageTable" class="uk-table uk-table-middle uk-table-divider uk-table-hover">
 @if(count($item) === 0 )
       <thead>
         <tr>
@@ -47,29 +52,29 @@ ul.uk-nav-sub.action_icons { width: max-content;}
       <tbody>
   @foreach ($item as $it)
         @php ($trId = "trId_".$it->id)
-        <tr id="{{ $trId }}">
+        <tr id="{{ $trId }}"class="cursor-pointer">
           <td>{{ $it->id }}</td>
           <td>{{ $it->contact->fname }} {{ $it->contact->lname }}</td>
           <td>{{ $it->subject }}</td>
-          <td>
-              <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+          <td class="actionsMenu">
+            <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                 <li class="uk-parent">
-                    <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>
-                    <ul class="uk-nav-sub action_icons">
-                        <li><a href="#resubmit" itemRowId="{{ $it->id }}" class="action-resubmit uk-button uk-button-primary uk-button-small color-i-white align-i-left">
-                          <span uk-icon="forward"></span> Resubmit</a>
-                        </li>
-                        <li class="uk-nav-divider"></li>
-                        <li><a href="#edit" itemRowId="{{ $it->id }}" class="action-edit uk-button uk-button-primary uk-button-small color-i-white align-i-left">
-                          <span uk-icon="file-edit"></span> Edit</a>
-                        </li>
-                        <li class="uk-nav-divider"></li>
-                        <li><a href="#delete" itemRowId="{{ $it->id }}" class="action-delete uk-button uk-button-danger uk-button-small color-i-white align-i-left">
-                          <span uk-icon="trash"></span> Delete</a>
-                        </li>
-                    </ul>
+                  <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>
+                  <ul class="uk-nav-sub action_icons">
+                      <li><a href="#submit" itemRowId="{{ $it->id }}" class="action-submit uk-button uk-button-primary uk-button-small color-i-white align-i-left">
+                        <span uk-icon="forward"></span> submit</a>
+                      </li>
+                      <li class="uk-nav-divider"></li>
+                      <li><a href="#edit" itemRowId="{{ $it->id }}" class="action-edit uk-button uk-button-primary uk-button-small color-i-white align-i-left">
+                        <span uk-icon="file-edit"></span> Edit</a>
+                      </li>
+                      <li class="uk-nav-divider"></li>
+                      <li><a href="#delete" itemRowId="{{ $it->id }}" class="action-delete uk-button uk-button-danger uk-button-small color-i-white align-i-left">
+                        <span uk-icon="trash"></span> Delete</a>
+                      </li>
+                  </ul>
                 </li>
-              </ul>            
+              </ul>           
           </td>
         </tr>
     @endforeach
@@ -77,26 +82,40 @@ ul.uk-nav-sub.action_icons { width: max-content;}
 @endif
     </table>
 
-<a class="uk-button uk-button-default" href="#modal-form" uk-toggle>Open</a>
-
 <div id="modal-form" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Modal Title</h2>
+            <h2 class="uk-modal-title" id="titleModal">Message Edit</h2>
         </div>
         <div class="uk-modal-body">
           <form>
             <fieldset class="uk-fieldset">
 
-                <legend class="uk-legend">Legend</legend>
-
                 <div class="uk-margin">
-                    <input class="uk-input" type="text" placeholder="Input">
+                  <div uk-form-custom="target: > * > span:last-child"> To: 
+                    <select id="messageRecipient" class="uk-input">
+                      <option value="">Select a Contact</option>
+                      @foreach ($contacts as $c)                        
+                        <option value="{{ $c->id }}">{{ $c->fname }} {{ $c->lname }} | {{ $c->email }}</option>
+                      @endforeach
+                    </select>
+                    <span class="uk-link">
+                      <span uk-icon="icon: pencil"></span>
+                      <span></span>
+                    </span>
+                  </div>
                 </div>
 
                 <div class="uk-margin">
-                    <textarea class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
+                    <input id="messageSubject" class="uk-input" type="text" placeholder="Subject">
+                </div>
+
+                <div class="uk-margin">
+                    <textarea class="uk-textarea" name="messageContent" rows="5" placeholder="Your message here..."></textarea>
+                    <script>
+                            CKEDITOR.replace( 'messageContent' );
+                    </script>
                 </div>
 
             </fieldset>
@@ -109,20 +128,92 @@ ul.uk-nav-sub.action_icons { width: max-content;}
     </div>
 </div>
 
+<div id="modal-overflow" uk-modal>
+  <div class="uk-modal-dialog">
+
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+
+    <div class="uk-modal-header">
+      <h2 class="uk-modal-title">Message to Contact </h2>
+    </div>
+
+    <div class="uk-modal-body" uk-overflow-auto>
+      
+      <table class="uk-table uk-table-hover uk-table-divider">
+        <tbody>
+          <tr>
+            <th class="uk-width-small">Contact:</th>
+            <td>Contact</td>
+          </tr>
+          <tr>
+            <th class="uk-width-small">E-mail:</th>
+            <td>email@email.com</td>
+          </tr>
+          <tr>
+            <th class="uk-width-small">Date:</th>
+            <td>Mes dd/mm/yyyy </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</p>
+
+    </div>
+
+    <div class="uk-modal-footer uk-text-right">
+      <button class="uk-button uk-button-primary" type="button">Edit</button>
+      <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+    </div>
+
+  </div>
+</div>
+
 
 <script>
+UIkit.modal(jQuery('#modal-form')).show();
+
 var BASE_URL_API = 'http://localhost:8000/api';
+
+function createLine(obj){
+  var actions = ''+
+  '<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>'+
+    ' <li class="uk-parent">'+
+      ' <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>'+
+      ' <ul class="uk-nav-sub action_icons">'+
+        ' <li><a href="#submit" itemRowId="' + obj.id + '" class="action-submit uk-button uk-button-primary uk-button-small color-i-white align-i-left">'+
+            ' <span uk-icon="forward"></span> submit</a>'+
+          ' </li>'+
+        ' <li class="uk-nav-divider"></li>'+
+        ' <li><a href="#edit" itemRowId="' + obj.id + '" class="action-edit uk-button uk-button-primary uk-button-small color-i-white align-i-left">'+
+            ' <span uk-icon="file-edit"></span> Edit</a>'+
+          ' </li>'+
+        ' <li class="uk-nav-divider"></li>'+
+        ' <li><a href="#delete" itemRowId="' + obj.id + '" class="action-delete uk-button uk-button-danger uk-button-small color-i-white align-i-left">'+
+            ' <span uk-icon="trash"></span> Delete</a>'+
+          ' </li>'+
+        ' </ul>'+
+      ' </li>'+
+    '</ul>';
+
+  var line = '<tr id="trId_'+obj.id+'">'+
+                '<td>'+obj.id+'</td>'+
+                '<td> '+obj.fname+' '+obj.lname+'</td>'+
+                '<td class="cursor-pointer"> '+obj.subject+'</td>'+
+                '<td>'+ actions +'</td>'+
+              '</tr>';
+  jQuery('#messageTable').append(line);
+  startAction();
+}
 
 function deleteMessage(id){
   jQuery.ajax({
     url: BASE_URL_API + '/message/delete/'+ id,
-    type: 'DELETE',
-    dataType: 'json',
-    // success: function (data) {
-        // for (var i = 0 ; i < data.length; i++) {
-        //     console.log(data[i]);
-        // };
-    // }
+    type: 'DELETE'
   })
   .done(function() {
     // console.log("success");
@@ -131,11 +222,30 @@ function deleteMessage(id){
   })
   .fail(function() {
     // console.log("error");
-    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Error to delete!'})
+    UIkit.notification({message: '<span uk-icon=\'icon: ban\'></span> Error to delete!'})
   })
   // .always(function() {
   //   UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
   // });
+}
+
+function submit(id){
+  jQuery.ajax({
+  url: BASE_URL_API + '/message/submit/'+ id,
+  type: 'POST'
+})
+.done(function() {
+  // console.log("success");
+  UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Message sent!'});
+  jQuery('#trId_'+id).remove();
+})
+.fail(function() {
+  // console.log("error");
+  UIkit.notification({message: '<span uk-icon=\'icon: ban\'></span> failed to send message!'})
+})
+// .always(function() {
+  // UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
+// });
 }
 
 function editMessage(id){
@@ -144,40 +254,37 @@ function editMessage(id){
     type: 'GET',
     dataType: 'json',
     success: function (data) {
+      console.log(data);
       UIkit.modal(jQuery('#modal-form')).show();
         // for (var i = 0 ; i < data.length; i++) {
         //     console.log(data[i]);
         // };
     }
-  })
-  .done(function() {
-    // console.log("success");
-    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Message edited!'});
-    // jQuery('#trId_'+id).remove();
-  })
-  .fail(function() {
-    // console.log("error");
-    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Error to open!'})
-  })
-  // .always(function() {
-  //   UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
-  // });
+    ,error: function (ajaxContext) {
+        // console.log(ajaxContext.responseText)
+        var errorData = JSON.parse(ajaxContext.responseText);
+        UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Error ! '+errorData.callback_message})
+    }
+  });
 }
 
 // On click
-jQuery('a.action-delete').click(function(){
-  var itemId = jQuery(this).attr('itemRowId');
-  if (! confirm('Delete?')) { 
-    return false; 
-  }else{    
-    deleteMessage(itemId);
-  }
-});
+function startAction(){
+  jQuery('a.action-delete').click(function(){
+    var itemId = jQuery(this).attr('itemRowId');
+    if (! confirm('Delete?')) { 
+      return false; 
+    }else{    
+      deleteMessage(itemId);
+    }
+  });
 
-jQuery('a.action-edit').click(function(){
-  var itemId = jQuery(this).attr('itemRowId');
-  editMessage(itemId);
-});
+  jQuery('a.action-edit').click(function(){
+    var itemId = jQuery(this).attr('itemRowId');
+    editMessage(itemId);
+  });
+}
+startAction();
 </script>
 
 </body>

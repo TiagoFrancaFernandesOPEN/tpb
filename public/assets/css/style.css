@@ -1,0 +1,38 @@
+.toTop{
+    position: fixed;
+    bottom: 12%;
+    right: 2%;
+    z-index: 999;
+}
+
+.newContact{
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    z-index: 999;
+}
+.newContact a span {
+    text-align: center;
+    font-size: 30px;
+    background: #17b7234a;
+    border-radius: 50%;
+    font-weight: bold;
+    color: #569df2;
+    border: #569df2 solid 1px;
+    padding: 15px;
+}
+.newContact a span:hover {
+    color: #0f3a6d;
+    border: #0f3a6d solid 1px;
+}
+
+a{
+    text-decoration: none !important;
+}
+.actionIcon span{
+    font-size:23px;
+}
+.actionIcon span:hover{
+    font-size:26px;
+    text-decoration: none !important;
+}

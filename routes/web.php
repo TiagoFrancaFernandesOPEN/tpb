@@ -17,8 +17,7 @@ use App\Phone;
 use App\Message;
 
 Route::get('/', function () {
-    echo view('routes');
-    
+    echo view('routes');    
     return view('welcome');
 });
 
@@ -168,7 +167,9 @@ Route::get('/bycontact2', function () {
 
 Route::get('/messages', function () {
    $messages = Message::all();
-   return view('front/messages', compact('messages'));
+   $phones = Phone::all();
+   $contacts = Contact::all();
+   return view('front/messages', compact('messages', 'phones', 'contacts'));
 });
 
 // Route::get('/messagesbycontact', function () {
