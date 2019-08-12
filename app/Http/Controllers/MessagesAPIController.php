@@ -95,7 +95,18 @@ public function listMessages()
      */
     public function show($id)
     {
-        //
+        $message = Message::find($id);
+        if(isset($message))
+        {            
+            $data = $message;
+            return Response()->json($data, 202);
+        }
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'show', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
     }
 
     /**
@@ -130,7 +141,8 @@ public function listMessages()
     public function destroy($id)
     {
         $message = Message::find($id);
-        if(isset($message)){
+        if(isset($message))
+        {
             if($message->delete())
             {
                 $data =
