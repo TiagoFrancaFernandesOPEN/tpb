@@ -52,10 +52,11 @@ li.uk-open>a>span>svg {display: none;}
       <tbody>
   @foreach ($item as $it)
         @php ($trId = "trId_".$it->id)
-        <tr id="{{ $trId }}"class="cursor-pointer">
-          <td>{{ $it->id }}</td>
-          <td>{{ $it->contact->fname }} {{ $it->contact->lname }}</td>
-          <td>{{ $it->subject }}</td>
+        @php ($trId = "trId_".$it->id)
+        <tr id="{{ $trId }}">
+          <td class="messageDetails cursor-pointer" messageId="{{ $it->id }}">{{ $it->id }}</td>
+          <td class="contactDetails cursor-pointer" contactId="{{ $it->contact->id }}">{{ $it->contact->fname }} {{ $it->contact->lname }}</td>
+          <td class="messageDetails cursor-pointer" messageId="{{ $it->id }}">{{ $it->subject }}</td>
           <td class="actionsMenu">
             <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                 <li class="uk-parent">
@@ -82,7 +83,7 @@ li.uk-open>a>span>svg {display: none;}
 @endif
     </table>
 
-<div id="modal-form" uk-modal>
+<div id="modal-message-inputs" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
@@ -126,46 +127,42 @@ li.uk-open>a>span>svg {display: none;}
           </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button id="messageCancelChanges" class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-            <button id="messageSaveChanges" class="uk-button uk-button-primary" type="button">Save</button>
+          <button id="messageCancelChanges" class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+          <button id="messageSaveChanges" class="uk-button uk-button-primary" type="button">Save</button>
         </div>
     </div>
 </div>
 
-<div id="modal-overflow" uk-modal>
+<div id="modal-message-details" uk-modal>
   <div class="uk-modal-dialog">
 
     <button class="uk-modal-close-default" type="button" uk-close></button>
 
     <div class="uk-modal-header">
-      <h2 class="uk-modal-title">Message to Contact </h2>
-    </div>
-
-    <div class="uk-modal-body" uk-overflow-auto>
-      
+      <h3 id="messageDetailSubjectHeader" class="uk-modal-title"></h3>
       <table class="uk-table uk-table-hover uk-table-divider">
         <tbody>
           <tr>
             <th class="uk-width-small">Contact:</th>
-            <td>Contact</td>
+            <td id="messageDetailContact"></td>
           </tr>
           <tr>
             <th class="uk-width-small">E-mail:</th>
-            <td>email@email.com</td>
+            <td id="messageDetailEmail"></td>
           </tr>
           <tr>
-            <th class="uk-width-small">Date:</th>
-            <td>Mes dd/mm/yyyy </td>
+            <th class="uk-width-small">Subject:</th>
+            <td id="messageDetailSubject"></td>
           </tr>
         </tbody>
       </table>
-      <hr>
+    </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum.</p>
+    <div class="uk-modal-body" uk-overflow-auto>
+      <h6>Message:</h6>
+      <hr>   
+      <div id="messageDetailMessage">
+      </div>
 
     </div>
 
@@ -207,64 +204,90 @@ function createLine(obj){
                 '<td>'+obj.id+'</td>'+
                 '<td> '+obj.fname+' '+obj.lname+'</td>'+
                 '<td class="cursor-pointer"> '+obj.subject+'</td>'+
-                '<td>'+ actions +'</td>'+
+                '<td class="actionsMenu">'+ actions +'</td>'+
               '</tr>';
   jQuery('#messageTable').append(line);
   startAction();
 }
 
 function deleteMessage(id){
+  var ajaxContext;
   jQuery.ajax({
-    url: BASE_URL_API + '/message/delete/'+ id,
-    type: 'DELETE'
+    url: BASE_URL_API + 'message/delete/'+ id,
+    type: 'DELETE',
+    success: function (data) {ajaxContext=data},
+    error: function (ajaxContext) {ajaxContext=ajaxContext}
   })
   .done(function() {
-    // console.log("success");
     UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Message deleted!'});
     jQuery('#trId_'+id).remove();
   })
-  .fail(function() {
-    // console.log("error");
-    UIkit.notification({message: '<span uk-icon=\'icon: ban\'></span> Error to delete!'})
+  .fail(function (ajaxContext) {
+  // console.log(ajaxContext.responseText)
+  var errorData = JSON.parse(ajaxContext.responseText);
+  UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Failed to delete! '+errorData.callback_message});
   })
   // .always(function() {
   //   UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
   // });
 }
 
-function clearFormModalInputs(obj){
+function clearMessageFormModal(){
   jQuery('#messageId').val('');
   jQuery('#messageRecipient').val('');
   jQuery('#messageSubject').val('');
   jQuery('#messageContent').val('');
   CKEDITOR.instances["messageContent"].setData('');
 }
-function formModalInputs(obj){
+
+function clearMessageDetailModal(){
+  jQuery('#messageDetailSubjectHeader').html('');
+  jQuery('#messageDetailContact').html('');
+  jQuery('#messageDetailSubject').html('');
+  jQuery('#messageDetailEmail').html('');
+  jQuery('#messageDetailMessage').html('');
+}
+
+function messageFormModal(obj){
   if(obj.length <= 0){
-    clearFormModalInputs();
-  // }else if(){
+    clearMessageFormModal();
+    UIkit.modal(jQuery('#modal-message-inputs')).hide();
+    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Fail! No data!'});
   }else{
     jQuery('#messageId').val(obj.id);
     jQuery('#messageRecipient').val(obj.contact_id);
     jQuery('#messageSubject').val(obj.subject);
-    jQuery('#messageContent').html(obj.message);
     CKEDITOR.instances["messageContent"].setData(obj.message);
+  }
+}
+
+
+function messageDetailModal(obj){
+  if(obj.length <= 0){
+    clearMessageDetailModal();
+    UIkit.modal(jQuery('#modal-message-details')).hide();
+    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Fail! No data!'});
+  }else{
+    console.log(obj);
+    jQuery('#messageDetailContact').html(obj.contact_full_name);
+    jQuery('#messageDetailSubject').html(obj.subject);
+    jQuery('#messageDetailSubjectHeader').html(obj.subject);
+    jQuery('#messageDetailEmail').html(obj.contact_email);
+    jQuery('#messageDetailMessage').html(obj.message);
   }
 }
 
 function submitMessage(id){
   jQuery.ajax({
-  url: BASE_URL_API + '/message/submit/'+ id,
+  url: BASE_URL_API + 'message/submit/'+ id,
   type: 'POST'
 })
 .done(function() {
-  // console.log("success");
   UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Message sent!'});
   jQuery('#trId_'+id).remove();
 })
 .fail(function() {
-  // console.log("error");
-  UIkit.notification({message: '<span uk-icon=\'icon: ban\'></span> failed to send message!'})
+  UIkit.notification({message: '<span uk-icon=\'icon: ban\'></span> Failed to send message!'})
 })
 // .always(function() {
   // UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
@@ -272,27 +295,51 @@ function submitMessage(id){
 }
 
 function editMessage(id){
+  var ajaxContext;
   jQuery.ajax({
-    url: BASE_URL_API + '/message/'+ id,
+    url: BASE_URL_API + 'message/'+ id,
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      console.log(data);
-      formModalInputs(data);
-      UIkit.modal(jQuery('#modal-form')).show();
-        // for (var i = 0 ; i < data.length; i++) {
-        //     console.log(data[i]);
-        // };
+      ajaxContext=data;
+      messageFormModal(data);
+      UIkit.modal(jQuery('#modal-message-inputs')).show();
     }
     ,error: function (ajaxContext) {
         // console.log(ajaxContext.responseText)
         var errorData = JSON.parse(ajaxContext.responseText);
-        UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Error ! '+errorData.callback_message})
+        UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Error ! '+errorData.callback_message});
     }
   });
 }
 
-// On click
+function getMessage(id){
+  var ajaxContext;
+  jQuery.ajax({
+    url: BASE_URL_API + 'message/'+ id,
+    type: 'GET',
+    success: function (data) {
+		ajaxContext=data;
+    messageDetailModal(data);
+    UIkit.modal(jQuery('#modal-message-details')).show();
+	},
+    error: function (ajaxContext) {ajaxContext=ajaxContext}
+  })
+  .done(function() {
+    UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Opening message!'});
+  })
+  .fail(function (ajaxContext) {
+  // console.log(ajaxContext.responseText)
+  var errorData = JSON.parse(ajaxContext.responseText);
+  UIkit.notification({message: '<span uk-icon=\'icon: check\'></span>Fail to get message!' + errorData.callback_message});
+  })
+  // .always(function() {
+  //   UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Complete!'})
+  // });
+}
+
+
+// Start the click
 function startAction(){
   jQuery('a.action-delete').click(function(){
     var itemId = jQuery(this).attr('itemRowId');
@@ -308,8 +355,13 @@ function startAction(){
     editMessage(itemId);
   });
 
+  jQuery('td.messageDetails').click(function(){
+    var itemId = jQuery(this).attr('messageId');
+    getMessage(itemId);
+  });
+
   jQuery('#messageCancelChanges').click(function(){
-    clearFormModalInputs();
+    clearMessageFormModal();
   });
 }
 startAction();

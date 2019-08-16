@@ -1,5 +1,7 @@
 <?php
 
+define('SITE_NAME', "TPB - Tiago's Phone Book");
+
 return [
 
     /*

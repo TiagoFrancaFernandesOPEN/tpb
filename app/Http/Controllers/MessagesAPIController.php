@@ -97,8 +97,19 @@ public function listMessages()
     {
         $message = Message::find($id);
         if(isset($message))
-        {            
-            $data = $message;
+        {
+            // $data = $message;
+            //{"id":60,"subject":"Assunto Teste 2 para contato 2","message":"Aqui Vai minha mensagem #2 para o contato id 2","contact_id":2,"created_at":null,"updated_at":null}
+            $data = [
+                "id" => $message->id,
+                "contact_full_name" => $message->contact->fname . ' ' . $message->contact->lname,
+                "contact_email" => $message->contact->email,
+                "subject" => $message->subject,
+                "message" => $message->message,
+                "contact_id" => $message->contact_id,
+                "created_at" => $message->created_at,
+                "updated_at" => $message->updated_at
+            ];
             return Response()->json($data, 202);
         }
             $data =

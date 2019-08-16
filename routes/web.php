@@ -21,6 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('layouttest', function () {
+    return view('front/layout');
+});
+
+Route::get('teste', function () {
+    return view('front/teste');
+});
+
 Route::get('/routes', function () {
    return view('routes');
 });
