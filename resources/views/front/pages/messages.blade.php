@@ -1,30 +1,72 @@
-@include ('includes/top')
-<body>
+@extends('front/layout')
 
-@include ('routes')    
+@section('title', 'Mensagens')
+@include ('routes')
 
+@section ('inside_head')
+  
 <style>
-/* COLOR IMPORTANT */
-.color-i-white{ color: white !important; }
-.color-i-blue{ color: blue !important; }
-.color-i-yellow{ color: yellow !important; }
-.color-i-green{ color: green !important; }
+  /* COLOR IMPORTANT */
+  .color-i-white {
+    color: white !important;
+  }
 
-/* ALIGN IMPORTANT */
-.align-i-left{ text-align: left !important; }
-.align-i-right{ text-align: right !important; }
-.align-i-center{ text-align: center !important; }
-.align-i-justify{ text-align: justify !important; }
-.align-i-end{ text-align: end !important; }
+  .color-i-blue {
+    color: blue !important;
+  }
 
-ul.uk-nav-sub.action_icons { width: max-content;}
+  .color-i-yellow {
+    color: yellow !important;
+  }
 
-.cursor-pointer { cursor: pointer;}
-td.actionsMenu { text-align: center;}
-td.actionsMenu:hover {background: #1e87f029;}
-li.uk-open>a>span>svg {display: none;}
+  .color-i-green {
+    color: green !important;
+  }
+
+  /* ALIGN IMPORTANT */
+  .align-i-left {
+    text-align: left !important;
+  }
+
+  .align-i-right {
+    text-align: right !important;
+  }
+
+  .align-i-center {
+    text-align: center !important;
+  }
+
+  .align-i-justify {
+    text-align: justify !important;
+  }
+
+  .align-i-end {
+    text-align: end !important;
+  }
+
+  ul.uk-nav-sub.action_icons {
+    width: max-content;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  td.actionsMenu {
+    text-align: center;
+  }
+
+  td.actionsMenu:hover {
+    background: #1e87f029;
+  }
+
+  li.uk-open>a>span>svg {
+    display: none;
+  }
 </style>
+@endsection 
 
+@section ('content')
 @php ($item = $messages)
 
     <table id="messageTable" class="uk-table uk-table-middle uk-table-divider uk-table-hover">
@@ -173,7 +215,8 @@ li.uk-open>a>span>svg {display: none;}
 
   </div>
 </div>
-
+@endsection
+@section ('scripts_before_end_body')
 
 <script>
 // var BASE_URL_API = 'http://localhost:8000/api';
@@ -366,6 +409,4 @@ function startAction(){
 }
 startAction();
 </script>
-
-</body>
-</html>
+@endsection

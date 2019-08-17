@@ -1,34 +1,4 @@
 <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-  <nav class="uk-navbar-container uk-margin" uk-navbar>
-    <div class="uk-navbar-left">
-
-      <a class="uk-navbar-item uk-logo" href="#">TPB</a>
-
-      <ul class="uk-navbar-nav">
-        <li>
-          <a href="#">
-            <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-            Features
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-            Features
-          </a>
-        </li>
-      </ul>
-
-      <div class="uk-navbar-item">
-        <form action="javascript:void(0)">
-          <input class="uk-input uk-form-width-small" type="text" placeholder="Name, phone">
-          <button class="uk-button uk-button-default">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-</div>
-<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
   <div class="uk-overflow-auto">
     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
       <thead>
@@ -46,151 +16,7 @@
           <td class="uk-table-link">
             <a class="uk-link-reset" href="#">John Doe</a>
           </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-
-
-
-
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
-          <td class="uk-text-justify">name@site.com</td>
-          <td class="uk-text-nowrap">
-            <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
-              uk-tooltip="Edit contact"><span class="mbri-edit"></span></a>
-            <a href="#" class="uk-icon-link uk-text-danger actionIcon" uk-tooltip="Delete contact"><span
-                class="mbri-trash"></span></a>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="uk-preserve-width uk-border-circle" src="assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href="#">John Doe</a>
-          </td>
-          <td class="uk-text-justify"><a class="uk-link-reset" href="#">+55 41 99999-1234</a></td>
+          <td class="uk-text-justify"><a class="uk-link-reset number-detail" phoneNumber="+55 41 99999-1234" href="#contact-modal" uk-toggle>+55 41 99999-1234</a></td>
           <td class="uk-text-justify">name@site.com</td>
           <td class="uk-text-nowrap">
             <a href="#" class="uk-icon-link uk-margin-small-right uk-text-primary actionIcon"
@@ -302,3 +128,22 @@
     </div>
   </div>
 </div>
+@php ($modalBody = "<span id='phoneNumberModal'></span>")
+@section('scripts_before_end_body')
+@component ('front/component/modal', [
+  'id'=>'contact-modal','header'=>'Contact Header','body'=>$modalBody,
+  'buttons'=>
+    [
+      ['class'=>'class1','type'=>'button', 'text'=>'Botão1'],
+      ['class'=>'class2','type'=>'button', 'text'=>'Botão2'],
+      ['type'=>'button', 'text'=>'Botão3']
+    ]
+  ])
+@endcomponent
+@endsection
+<script>
+jQuery('a.number-detail').click(function(){
+  var itemId = jQuery(this).attr('phoneNumber');
+  jQuery('#phoneNumberModal').html(itemId);
+  });
+</script>
