@@ -20,7 +20,8 @@ class MessagesAPIController extends Controller
     {
         return $this->listMessages();
     }
-public function listMessages()
+    
+    public function listMessages()
     {
         $collections = Message::all();
         $result = (int) $collections->count();
@@ -55,8 +56,9 @@ public function listMessages()
         }else{
             foreach ($messages as $m)
             {
-                $messageData = [
-                     'id' => $m->id,
+                $messageData = 
+                [
+                    'id' => $m->id,
                     'toId' => $m->contact->id, 'toName' => $m->contact->fname, 
                     'subject' => $m->subject, 'message' => $m->message
                 ];
@@ -67,16 +69,6 @@ public function listMessages()
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -84,15 +76,15 @@ public function listMessages()
      */
     public function store(Request $request)
     {
-        //
-    }
+        $message = new Message;
+        $message->subject = $request->subject;
+        $message->message = $request->message;
+        $message->contact_id = $request->contact_id;
+        $message->save();
+        return Response()->json($message, 201);
+    }    
+    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $message = Message::find($id);
@@ -111,24 +103,14 @@ public function listMessages()
                 "updated_at" => $message->updated_at
             ];
             return Response()->json($data, 202);
-        }
+        }else{
             $data =
             [
                 'status' => '404', 'callback_message' => 'Not found!',
                 'action' => 'show', 'target' =>  $id
             ];
             return Response()->json($data, 404);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        }
     }
 
     /**
@@ -140,11 +122,26 @@ public function listMessages()
      */
     public function update(Request $request, $id)
     {
-        // $message = Message::find($id);
-        // if(isset($message))
-        // {
-
-        // }
+        if (Message::where('id', $id)->exists()){
+            $message = Message::find($id);
+            $message->subject = is_null($message->subject) ? $message->subject : $request->subject;
+            $message->message = is_null($message->message) ? $message->message : $request->message;
+            $message->contact_id = is_null($message->contact_id) ? $message->contact_id : $request->contact_id;
+            $message->save();
+            $data =
+                [ 
+                    'status' => '200', 'callback_message' => 'Updated!',
+                    'action' => 'update', 'target' =>  $id
+                ];
+            return Response()->json($data, 200);
+        }else{
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'show', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
+        }
     }
 
     /**
@@ -168,11 +165,11 @@ public function listMessages()
                 return Response()->json($data, 202);
             }
         }
-                $data =
-                [
-                    'status' => '404', 'callback_message' => 'Not found!',
-                    'action' => 'delete', 'target' =>  $id
-                ];
-                return Response()->json($data, 404);
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'delete', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
     }
 }

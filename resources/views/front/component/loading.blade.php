@@ -1,54 +1,30 @@
-@section ('inside_head')
-  <!-- Start Loading component -->
-  <link rel="stylesheet" href="assets/css/animate.css">
-  <style> 
-    #spinnerContainer
-    {
-      width:100%;
-      height:700px;
-      position:relative;
-      background:#fff;
-    }
-    
-    .spinnerCentreBox
-    {
-      width: 100%;
-      height: 700px;
-      position: relative;
-      background: #fff;
-      background: #ddb3e4;
-      top: 0;
-      /* left: 0; */
-      height: 100%;
-      position: fixed;
-      z-index: 1000;
-      overflow-x: hidden;
-      transition: 0.5s;
-      /* width: 0; */
-    }
-    #spinnerIcon{
-      font-size: 3em;
-      padding: 15% 15%;
-      color: #331837;
-      text-shadow: #ca7b1a 6px 5px 20px;
-      font-family: monospace;
-    }
-    #spinnerIcon img {
-      margin-left: 20%;
-      width: 2em;
-    }
-    .display-none{display:none !important}
-  </style>
-  <script src="assets/js/loading.js"></script>
-@endsection
-
 @php ($text = isset($text) ? $text : 'Loading...')
 @php ($img = isset($img) ? $img : 'assets/img/loading.gif')
+
+<style>
+#loadingImg {
+		-webkit-animation: rotation 1s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+		from {
+				-webkit-transform: rotate(0deg);
+		}
+		to {
+				-webkit-transform: rotate(359deg);
+		}
+}
+</style>
+
+
 
 <div id="spinnerContainer">
   <div class="spinnerCentreBox">
     <div id="spinnerIcon">
-      <img src="assets/img/loading.gif" />
+      {{-- <img src="{{ $img }}" /> --}}      
+      <span>
+        <svg  id="loadingImg" width="40" height="40" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="clock"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"></circle><rect x="9" y="4" width="1" height="7"></rect><path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625"></path></svg>
+      </span>
       <span id="loadingText">{{ $text }}</span>
     </div>
   </div>

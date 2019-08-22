@@ -19,16 +19,12 @@ function spinnerStart(){
   jQuery(window).on('load', function(){
   jQuery('#spinnerIcon').addClass('bounceOutUp');
   jQuery('#spinnerIcon').addClass('animated');
-    waitAndRun(500,  function run(){
-      jQuery('#spinnerContainer').addClass('fadeOut');
-      jQuery('#spinnerContainer').addClass('animated');
-        waitAndRun(500, function run(){
-          jQuery('#spinnerContainer').hide();
-          jQuery('#spinnerIcon').removeClass('fadeOut');
-          jQuery('#spinnerIcon').removeClass('animated');
-          jQuery('#spinnerContainer').removeClass('fadeOut');
-          jQuery('#spinnerContainer').removeClass('animated');
-        });
+    waitAndRun(400,  function run(){
+      jQuery('#spinnerContainer').hide();
+      jQuery('#spinnerIcon').removeClass('fadeOut');
+      jQuery('#spinnerIcon').removeClass('animated');
+      jQuery('#spinnerContainer').removeClass('fadeOut');
+      jQuery('#spinnerContainer').removeClass('animated');
     });
   });
 }

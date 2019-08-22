@@ -1,30 +1,39 @@
-<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-  <nav class="uk-navbar-container uk-margin" uk-navbar>
-    <div class="uk-navbar-left">
+@php ($menu = [
+// ['name'=>'Name','url'=>'url1','icon'=>'star','target'=>'_self'],
 
-      <a class="uk-navbar-item uk-logo" href="#">TPB</a>
-
-      <ul class="uk-navbar-nav">
-        <li>
-          <a href="#">
-            <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-            Features
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-            Features
-          </a>
-        </li>
-      </ul>
-
-      <div class="uk-navbar-item">
-        <form action="javascript:void(0)">
-          <input class="uk-input uk-form-width-small" type="text" placeholder="Name, phone">
-          <button class="uk-button uk-button-default">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+])
+@php ($routes = Route::getRoutes())
+@foreach ($routes as $r)
+{{-- @if ($r->uri == "" || $r->uri == "/" ) --}}
+@if (strpos($r->uri, 'api/') !== false)
+  @continue
+@elseif (strpos($r->uri, '{') !== false)
+  @continue
+@else
+@php ($ar = ['name'=>$r->uri,'url'=>$r->uri,'target'=>'_self'])
+  @php (array_push($menu, $ar))
+@endif
+@endforeach
+<div class="uk-container-box uk-container-center uk-margin-bottom">  
+  <div class="topnav" id="myTopnav">
+    <a href="#home" class="active logo">TPB <span class="fullName">Tiago's Phones Book'</span></a>
+     @foreach ($menu as $m)
+        @php ($name = isset($m['name']) ? $m['name'] : '')
+        @php ($name = $name == '/' ? 'home' : $name)
+        @php ($url = isset($m['url']) ? $m['url'] : '#')
+        @php ($target = isset($m['target']) ? $m['target'] : '_self')
+          <a href="{{ $url }}" target="{{ $target }}">{{ $name }}</a>
+      @endforeach
+    {{-- <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" action="javascript:void(0)"> --}}
+    <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" action="http://localhost:8000/contacts/search" method="post">
+        @csrf
+        <span class="uk-search-icon-flip" uk-search-icon></span>
+        <input id="search-ajax-post" name="phrase" class="uk-search-input uk-input uk-form-success uk-form-width-medium" type="search" placeholder="Search...">
+    </form>
+    <a href="javascript:void(0);" class="icon" onclick="openMenuTop()">☰</a>
+  </div>
 </div>
+
+<script>
+// In assets/js/search.js
+</script>

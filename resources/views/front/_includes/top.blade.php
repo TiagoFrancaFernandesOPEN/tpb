@@ -1,20 +1,23 @@
-@php ($uikit="assets/uikit")
 <!DOCTYPE html>
 <html>
-<head>
-  <title>@yield('title', SITE_NAME)</title>
+  <head>
+  @hasSection('title')
+  <title>{{ SITE_NAME }} | @yield('title')</title>
+  @else
+  <title>{{ SITE_NAME }}</title>
+  @endif
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="assets/js/jquery-3.4.1.min.js"></script>
-<!-- CKEditor -->
-  <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+  <script src="{{ asset('') }}assets/js/jquery-3.4.1.min.js"></script>
+  <script src="{{ asset('') }}assets/js/loading.js"></script>
 <!-- Uikit Css Framework -->
-  <link rel="stylesheet" href="{{ $uikit }}/css/uikit.min.css" />
-  <script src="{{ $uikit }}/js/uikit.min.js"></script>
-  <script src="{{ $uikit }}/js/uikit-icons.min.js"></script>
+  <link rel="stylesheet" href="{{ asset('') }}assets/uikit/css/uikit.min.css" />
 <!-- Mobirise Icons -->
-    <link rel="stylesheet" href="assets/mobiriseicons/mobirise/style.css">
-  <link rel="stylesheet" href="assets/css/style.css" />
-  @yield('inside_head')
+  {{-- <link rel="stylesheet" href="{{ asset('') }}assets/mobiriseicons/mobirise/style.css"> --}}
+  <link rel="stylesheet" href="{{ asset('') }}assets/css/style.css" />
+  <!-- API URL -->
+  <script> var BASE_URL_API = '{{ env('API_URL') }}';</script>
+  @include ('front/_includes/inside_header')
 </head>
 <body>
+@include ('front/_includes/in_open_body')

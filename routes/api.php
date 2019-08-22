@@ -26,19 +26,18 @@ Route::get('/testjson', function () {
 });
 
 Route::get('/contacts', 'ContactsAPIController@listContacts');
-Route::get('/messages', 'MessagesAPIController@listMessages');
+Route::post('/contacts', 'ContactsAPIController@store');
+Route::post('/contactandphone', 'ContactsAPIController@storeContactAndPhone');
 Route::get('/contact/{id}', 'ContactsAPIController@show');
+Route::delete('/contact/{id}', 'ContactsAPIController@destroy');
+Route::get('/messages', 'MessagesAPIController@listMessages');
+Route::post('/messages', 'MessagesAPIController@store');
 Route::get('/contact/{id}/messages', 'MessagesAPIController@messagesByContact');
+Route::get('/contact/{id}/phones', 'ContactsAPIController@phonesByContact');
 Route::get('/message/{id}', 'MessagesAPIController@show');
+Route::put('/message/{id}', 'MessagesAPIController@update');
 Route::delete('/message/delete/{id}', 'MessagesAPIController@destroy');
-
-
-
-
-
-
-
-
+Route::post('/contacts/search', 'ContactsAPIController@searchApi');
 
 
 
