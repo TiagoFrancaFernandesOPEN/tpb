@@ -4,7 +4,7 @@
 
 @section('content')
 
-@php ($item = $messages)
+@php ($item = $arrayOfMessages)
 
 <table id="messageTable" class="uk-table uk-table-middle uk-table-divider uk-table-hover">
   @if(count($item) === 0 )
@@ -30,29 +30,29 @@
   </thead>
   <tbody>
     @foreach ($item as $it)
-    @php ($trId = "trId_".$it->id)
-    @php ($trId = "trId_".$it->id)
+    @php ($trId = "trId_".$it['id'])
+    @php ($trId = "trId_".$it['id'])
     <tr id="{{ $trId }}">
-      <td class="messageDetails cursor-pointer" messageId="{{ $it->id }}">{{ $it->id }}</td>
-      <td class="contactDetails cursor-pointer" contactId="{{ $it->contact->id }}">{{ $it->contact->fname }}
-        {{ $it->contact->lname }}</td>
-      <td class="messageDetails cursor-pointer" messageId="{{ $it->id }}">{{ $it->subject }}</td>
+      <td class="messageDetails cursor-pointer" messageId="{{ $it['id'] }}">{{ $it['id'] }}</td>
+      <td class="contactDetails cursor-pointer" contactId="{{ $it['contact_id'] }}">{{ $it['fname'] }}
+        {{ $it['lname'] }}</td>
+      <td class="messageDetails cursor-pointer" messageId="{{ $it['id'] }}">{{ $it['subject'] }}</td>
       <td class="actionsMenu">
         <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
           <li class="uk-parent">
             <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>
             <ul class="uk-nav-sub action_icons">
-              <li><a itemrowid="{{ $it->id }}"
+              <li><a itemrowid="{{ $it['id'] }}"
                   class="action-submit uk-button uk-button-primary uk-button-small color-i-white align-i-left">
                   <span uk-icon="forward"></span> submit</a>
               </li>
               <li class="uk-nav-divider"></li>
-              <li><a itemrowid="{{ $it->id }}"
+              <li><a itemrowid="{{ $it['id'] }}"
                   class="action-editMessage uk-button uk-button-primary uk-button-small color-i-white align-i-left">
                   <span uk-icon="file-edit"></span> Edit</a>
               </li>
               <li class="uk-nav-divider"></li>
-              <li><a itemrowid="{{ $it->id }}"
+              <li><a itemrowid="{{ $it['id'] }}"
                   class="action-deleteMessage uk-button uk-button-danger uk-button-small color-i-white align-i-left">
                   <span uk-icon="trash"></span> Delete</a>
               </li>
@@ -85,7 +85,7 @@
               <select id="messageRecipient" class="uk-input">
                 <option value="">Select a Contact</option>
                 @foreach ($contacts as $c)
-                <option value="{{ $c->id }}">{{ $c->fname }} {{ $c->lname }} | {{ $c->email }}</option>
+                <option value="{{ $c['id'] }}">{{ $c['fname'] }} {{ $c['lname'] }} | {{ $c['email'] }}</option>
                 @endforeach
               </select>
               <span class="uk-link">

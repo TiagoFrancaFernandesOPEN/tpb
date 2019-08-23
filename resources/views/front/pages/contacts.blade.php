@@ -1,58 +1,57 @@
 @extends('front/layout')
 @section ('title', 'Contacts')
 @section ('content')
-<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-  <div class="uk-overflow-auto">    
-    <table id="tableContactList" class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-      <thead>
-        <tr>
-          <th class="uk-table-shrink"></th>
-          <th class="uk-table-expand">Name</th>
-          <th class="uk-table-expand">Phone</th>
-          <th class="uk-table-expand">E-mail</th>
-          <th class="uk-table-expand uk-text-nowrap">
-            <a class="" onclick="loadContacts()"  uk-icon="icon: refresh">
-              Refresh list
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{-- <tr>
-          <td class="uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
-              <img class="uk-preserve-width uk-border-circle" src="{{ asset('') }}assets/img/avatar.jpg" width="40" alt=""></td>
-          <td class="uk-table-link uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
-              John Doe
+<div class="uk-overflow-auto">    
+  <table id="tableContactList" class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+    <thead>
+      <tr>
+        <th class="uk-table-shrink"></th>
+        <th class="uk-table-expand">Name</th>
+        <th class="uk-table-expand">Phone</th>
+        <th class="uk-table-expand">E-mail</th>
+        <th class="uk-table-expand uk-text-nowrap">
+          <a class="" onclick="loadContacts()"  uk-icon="icon: refresh">
+            Refresh list
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{-- <tr>
+        <td class="uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
+            <img class="uk-preserve-width uk-border-circle" src="{{ asset('') }}assets/img/avatar.jpg" width="40" alt=""></td>
+        <td class="uk-table-link uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
+            John Doe
+        </td>
+        <td class="uk-text-justify uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
+            +55 41 99999-1234</td>
+        <td class="uk-text-justify uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
+            name@site.com</td>
+        <td class="actionsMenu">
+          <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+              <li class="uk-parent">
+                  <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>
+              <ul class="uk-nav-sub action_icons">
+                  <li><a class="action-contactMessageList uk-button uk-button-primary uk-button-small color-i-white align-i-left" contact_id="1">
+                      <span uk-icon="list"></span> Message list</a>
+                  </li>
+                  <li class="uk-nav-divider"></li>
+                  <li><a class="action-edit uk-button uk-button-primary uk-button-small color-i-white align-i-left cursor-pointer action-contactDetails" contact_id="1" oldMod>
+                      <span uk-icon="file-edit"></span> Edit contact</a>
+                  </li>
+                  <li class="uk-nav-divider"></li>
+                  <li><a class="action-contactDelete uk-button uk-button-danger uk-button-small color-i-white align-i-left" contact_id="1">
+                      <span uk-icon="trash"></span> Delete</a>
+                  </li>
+              </ul>
+          </li>
+          </ul>
           </td>
-          <td class="uk-text-justify uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
-              +55 41 99999-1234</td>
-          <td class="uk-text-justify uk-link-reset cursor-pointer action-contactDetails" contact_id="1" oldMod>
-              name@site.com</td>
-          <td class="actionsMenu">
-            <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                <li class="uk-parent">
-                    <a href="#"><span uk-icon="icon: more; ratio: 1.1"></span></a>
-                <ul class="uk-nav-sub action_icons">
-                    <li><a class="action-contactMessageList uk-button uk-button-primary uk-button-small color-i-white align-i-left" contact_id="1">
-                        <span uk-icon="list"></span> Message list</a>
-                    </li>
-                    <li class="uk-nav-divider"></li>
-                    <li><a class="action-edit uk-button uk-button-primary uk-button-small color-i-white align-i-left cursor-pointer action-contactDetails" contact_id="1" oldMod>
-                        <span uk-icon="file-edit"></span> Edit contact</a>
-                    </li>
-                    <li class="uk-nav-divider"></li>
-                    <li><a class="action-contactDelete uk-button uk-button-danger uk-button-small color-i-white align-i-left" contact_id="1">
-                        <span uk-icon="trash"></span> Delete</a>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-            </td>
-        </tr> --}}
-      </tbody>
-    </table>
-  </div>
+      </tr> --}}
+    </tbody>
+  </table>
 </div>
+
 <div class="newContact">
   {{-- <a href="javascript:void(0)" _uk-tooltip="New contact"><span uk-icon="plus-circle"></span></a> --}}
   <div class="uk-inline">
@@ -171,8 +170,8 @@
   'id'=>'contact-modal','header'=>'Contact Details','body'=>$modalBody,
   'buttons'=>
     [
-      ['text'=>'New message'],
-      ['text'=>'Edit','classColor'=>'primary'],
+      ['text'=>'New message', 'attrName'=>'contact_id'],
+      ['text'=>'Edit','classColor'=>'primary action-edit','attrName'=>'contact_id'],
       ['text'=>'Delete','class'=>'action-contactDelete','type'=>'button',
       'classColor'=>'danger', 'attrName'=>'itemrowid']
     ]

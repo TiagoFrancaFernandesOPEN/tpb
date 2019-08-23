@@ -16,36 +16,42 @@ use App\Contact;
 use App\Phone;
 use App\Message;
 
-Route::get('/', array('as' => 'site_home', function () {
-   $messages = Message::all();
-   $phones = Phone::all();
-   $contacts = Contact::all();
-   return view('front/pages/contacts', compact('messages', 'phones', 'contacts'));
-}));
+Route::name('front.')->group(function () {
+   Route::get('/', array('as' => 'site_home', function () {
+      $messages = Message::all();
+      $phones = Phone::all();
+      $contacts = Contact::all();
+      return view('front/pages/contacts', compact('messages', 'phones', 'contacts'));
+   }));
 
-Route::get('/contact/{id}', array('as' => 'cont_id', function ($id){
-    return route('cont_id',$id);
-}));
+   Route::get('/contact/{id}', array('as' => 'cont_id', function ($id){
+      return route('cont_id',$id);
+   }));
 
-Route::get('/contacts', array('as' => 'site_contacts', function () {    
-   $messages = Message::all();
-   $phones = Phone::all();
-   $contacts = Contact::all();
-   return view('front/pages/contacts', compact('messages', 'phones', 'contacts'));
-}));
+   Route::get('/contacts', array('as' => 'site_contacts', function () {    
+      $messages = Message::all();
+      $phones = Phone::all();
+      $contacts = Contact::all();
+      return view('front/pages/contacts', compact('messages', 'phones', 'contacts'));
+   }));
 
-Route::get('/messages', function () {
-   $messages = Message::all();
-   $phones = Phone::all();
-   $contacts = Contact::all();
-   return view('front/pages/messages', compact('messages', 'phones', 'contacts'));
+   Route::get('/messages', function () {
+      $messages = Message::all();
+      $phones = Phone::all();
+      $contacts = Contact::all();
+      return view('front/pages/messages', compact('messages', 'phones', 'contacts'));
+   });
+
+   Route::get('/contact/{id}/messages', 
+   'MessagesAPIController@messagesByContactFront')->name('messagesbycontact');
+
+
+
+   //FIXME Remover
+   Route::get('/routes', function () { return view('routes'); });
+
+   //TODO Tratar a busca aqui
+   Route::get('/contacts/search', function () { return view('routes'); });
+
+   Route::post('/contacts/search', 'ContactsAPIController@searchForm')->name('searchform');
 });
-
-Route::get('/routes', function () {
-   return view('routes');
-});
-
-Route::get('/contacts/search', function () {
-   return view('routes');
-});
-Route::post('/contacts/search', 'ContactsAPIController@searchForm');

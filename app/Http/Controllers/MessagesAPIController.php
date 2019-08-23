@@ -11,11 +11,6 @@ use App\Message;
 
 class MessagesAPIController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return $this->listMessages();
@@ -68,12 +63,34 @@ class MessagesAPIController extends Controller
         return response()->json($arrayOfMessages);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function messagesByContactFront($id)
+    {
+        $collections = Message::where('contact_id', $id);
+        $contacts = Contact::all();
+        $result = (int) $collections->count();
+        $messages = $collections->get();
+        $arrayOfMessages = array();
+        
+        if($result <= 0 ){
+            $arrayOfMessages = ['error' => 'You have no messages.'];
+        }else{
+            foreach ($messages as $m)
+            {
+                $messageData = 
+                [
+                    'id' => $m->id, 'contact_id' => $m->contact->id, 
+                    'fname' => $m->contact->fname, 'lname' => $m->contact->lname, 
+                    'subject' => $m->subject, 'message' => $m->message
+                ];
+                array_push($arrayOfMessages, $messageData);
+            }
+        }
+        // print_r($arrayOfMessages);exit();
+        return view('front/pages/messages_by_contact', compact('arrayOfMessages','contacts'));
+    }
+
+    
     public function store(Request $request)
     {
         $message = new Message;
@@ -113,13 +130,7 @@ class MessagesAPIController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         if (Message::where('id', $id)->exists()){
@@ -144,12 +155,7 @@ class MessagesAPIController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $message = Message::find($id);

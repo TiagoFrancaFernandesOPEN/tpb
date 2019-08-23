@@ -53,12 +53,6 @@ class ContactsAPIController extends Controller
         return response()->json($contactsArray);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $contact = new Contact;
@@ -135,62 +129,47 @@ class ContactsAPIController extends Controller
             return Response()->json($data, 404);
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function showSimple($id)
     {
          $contact = Contact::find($id);
         if (isset($contact))
         {
-            return response()->json($contact, 201);
+            return response()->json($contact, 200);
+        }else
+        {
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'show', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
         }
-        $data =
-        [
-            'status' => '404', 'callback_message' => 'Not found!',
-            'action' => 'show', 'target' =>  $id
-        ];
-        return Response()->json($data, 404);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
-        $contact = Contact::find($id);
-        if (isset($contact))
+        if(Contact::where('id', $id)->exists())
         {
-            $contact = new Contact;
-            $contact->fname = $request->input('fname');
-            $contact->lname = $request->input('lname');
-            $contact->email = $request->input('email');
+            $contact = Contact::find($id);
+            $contact->fname = is_null($request->fname)?$contact->fname:$request->fname;
+            $contact->lname = is_null($request->lname)?$contact->lname:$request->lname;
+            $contact->email = is_null($request->email)?$contact->email:$request->email;
             $contact->save();
         
-            return response()->json($contact, 201);
+            return response()->json($contact, 202);
+        }else
+        {
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'update', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
         }
-        $data =
-        [
-            'status' => '404', 'callback_message' => 'Not found!',
-            'action' => 'show', 'target' =>  $id
-        ];
-        return Response()->json($data, 404);
     }
+    
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
      {
         Phone::where('contact_id', $id)->delete();
@@ -314,4 +293,69 @@ class ContactsAPIController extends Controller
         }
         return response()->json($arrayOfPhones);
     }
+
+
+    public function showPhone($id)
+    {
+        if(Phone::where('id', $id)->exists())
+        {
+            $phone = Phone::find($id);
+            return response()->json($phone, 202);
+        }else
+        {
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'show', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
+        }
+    }
+
+    public function updatePhone(Request $request, $id)
+    {
+        if(Phone::where('id', $id)->exists())
+        {
+            $phone = Phone::find($id);
+            $phone->apps = is_null($request->apps)?$phone->apps:$request->apps;
+            $phone->type = is_null($request->type)?$phone->type:$request->type;
+            $phone->number = is_null($request->number)?$phone->number:$request->number;
+            $phone->save();
+        
+            return response()->json($phone, 202);
+        }else
+        {
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'update', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
+        }
+    }
+    
+    public function destroyPhone($id)
+     {
+         if(Phone::where('id', $id)->exists())
+        {
+            if(Phone::where('id', $id)->delete())
+            {
+                $data =
+                [ 
+                    'status' => '202', 'callback_message' => 'Deleted!',
+                    'action' => 'delete', 'target' =>  $id
+                ];
+                return Response()->json($data, 202);
+            }
+        }else
+        {
+            $data =
+            [
+                'status' => '404', 'callback_message' => 'Not found!',
+                'action' => 'delete', 'target' =>  $id
+            ];
+            return Response()->json($data, 404);
+        }
+    }
+
 }

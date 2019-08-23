@@ -1,8 +1,7 @@
 @include ('front/_includes/top')
 
 @hasSection('content')
-{{-- @yield('content', View::make('front/resources/contacts_res')) --}}
-<div class="uk-container uk-container-center uk-margin-bottom">
+<div class="uk-container-box uk-container-center uk-margin-top uk-margin-bottom uk-margin-large-bottom">
 @yield('content')
 </div>
 @endif

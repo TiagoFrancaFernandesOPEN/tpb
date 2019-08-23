@@ -9,6 +9,8 @@
   @continue
 @elseif (strpos($r->uri, '{') !== false)
   @continue
+@elseif (strpos($r->uri, 'contacts/') !== false)
+  @continue
 @else
 @php ($ar = ['name'=>$r->uri,'url'=>$r->uri,'target'=>'_self'])
   @php (array_push($menu, $ar))
@@ -23,17 +25,16 @@
         @php ($url = isset($m['url']) ? $m['url'] : '#')
         @php ($target = isset($m['target']) ? $m['target'] : '_self')
           <a href="{{ $url }}" target="{{ $target }}">{{ $name }}</a>
-      @endforeach
-    {{-- <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" action="javascript:void(0)"> --}}
-    <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" action="http://localhost:8000/contacts/search" method="post">
+      @endforeach    
+    <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" 
+    action="{{ route('front.searchform') }}" method="post">
         @csrf
         <span class="uk-search-icon-flip" uk-search-icon></span>
-        <input id="search-ajax-post" name="phrase" class="uk-search-input uk-input uk-form-success uk-form-width-medium" type="search" placeholder="Search...">
+        <input id="search-ajax-post" name="phrase" 
+          class="uk-search-input uk-input uk-form-success uk-form-width-medium"
+          type="search" placeholder="Search...">
+
     </form>
     <a href="javascript:void(0);" class="icon" onclick="openMenuTop()">☰</a>
   </div>
 </div>
-
-<script>
-// In assets/js/search.js
-</script>

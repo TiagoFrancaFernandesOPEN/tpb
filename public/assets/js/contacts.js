@@ -15,6 +15,7 @@ obj.email+'</td>'+
 '         <li class="uk-parent">'+
 '             <a href="#"><span uk-icon="icon: more; ratio: 1.1" class="uk-icon"></span></a>'+
 '           <ul class="uk-nav-sub action_icons" hidden="" aria-hidden="true">'+
+// TODO criar recurso contactMessageList
 '               <li><a class="action-contactMessageList uk-button uk-button-primary uk-button-small color-i-white align-i-left" contact_id="'+obj.id+'">'+
 '                   <span uk-icon="list" class="uk-icon"></span> Message list</a>'+
 '               </li>'+
@@ -258,9 +259,11 @@ function startAction(){
   });
 
 
-  jQuery('.action-contactMessageList').click(function(){
-  var itemId = jQuery(this).attr('contact_id');
-  console.log('Messages to '+itemId);
+  jQuery('a.action-contactMessageList').click(function(){
+    var itemId = jQuery(this).attr('contact_id');
+    var MESSAGES_BY_USER = BASE_URL + 'contact/' + itemId + '/messages';
+    console.log(MESSAGES_BY_USER);
+    // window.location.href = MESSAGE_BY_USER;
   });
 
   function getContact(id){

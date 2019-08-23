@@ -40,7 +40,7 @@ function deleteMessage(id){
   .done(function() {
     UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Message deleted!'});
     jQuery('#trId_'+id).remove();
-    UIkit.modal('.uk-modal.uk-open').hide();
+    UIkit.modal('.uk-modal').hide();
     clearMessageDetailModal();
   })
   .fail(function (ajaxContext) {
