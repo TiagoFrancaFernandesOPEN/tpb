@@ -262,7 +262,8 @@ function startAction(){
   jQuery('a.action-contactMessageList').click(function(){
     var itemId = jQuery(this).attr('contact_id');
     var MESSAGES_BY_USER = BASE_URL + 'contact/' + itemId + '/messages';
-    window.location.href = MESSAGE_BY_USER;
+    console.log(MESSAGES_BY_USER);
+    window.location.href = MESSAGES_BY_USER;
   });
 
   function getContact(id){

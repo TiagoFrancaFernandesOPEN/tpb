@@ -24,7 +24,7 @@
         @php ($name = $name == '/' ? 'home' : $name)
         @php ($url = isset($m['url']) ? $m['url'] : '#')
         @php ($target = isset($m['target']) ? $m['target'] : '_self')
-          <a href="{{ $url }}" target="{{ $target }}">{{ $name }}</a>
+          <a href="{{ URL::to('/').'/'.$url }}" target="{{ $target }}">{{ $name }}</a>
       @endforeach    
     <form id="form-cont-easy-autocomplete" class="uk-search uk-search-default" 
     action="{{ route('front.searchform') }}" method="post">
