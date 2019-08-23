@@ -262,8 +262,7 @@ function startAction(){
   jQuery('a.action-contactMessageList').click(function(){
     var itemId = jQuery(this).attr('contact_id');
     var MESSAGES_BY_USER = BASE_URL + 'contact/' + itemId + '/messages';
-    console.log(MESSAGES_BY_USER);
-    // window.location.href = MESSAGE_BY_USER;
+    window.location.href = MESSAGE_BY_USER;
   });
 
   function getContact(id){
