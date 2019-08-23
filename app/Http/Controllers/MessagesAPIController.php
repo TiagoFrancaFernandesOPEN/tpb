@@ -81,7 +81,8 @@ class MessagesAPIController extends Controller
                 [
                     'id' => $m->id, 'contact_id' => $m->contact->id, 
                     'fname' => $m->contact->fname, 'lname' => $m->contact->lname, 
-                    'subject' => $m->subject, 'message' => $m->message
+                    'email' => $m->contact->email, 'subject' => $m->subject,
+                    'message' => $m->message
                 ];
                 array_push($arrayOfMessages, $messageData);
             }

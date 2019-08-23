@@ -6,6 +6,13 @@
 
 @php ($item = $arrayOfMessages)
 
+@foreach ($item as $it)
+<div class="">
+  <h3 class="uk-text-center uk-margin-large-left"><strong>Messages to: </strong> {{ $it['fname'] }} {{ $it['lname'] }} | {{ $it['email'] }} </h3>
+</div>
+@break
+@endforeach
+
 <table id="messageTable" class="uk-table uk-table-middle uk-table-divider uk-table-hover">
   @if(count($item) === 0 )
   <thead>
