@@ -8,12 +8,12 @@
 
 @foreach ($item as $it)
 <div class="">
-  <h3 class="uk-text-center uk-margin-large-left"><strong>Messages to: </strong> {{ $it['fname'] }} {{ $it['lname'] }} | {{ $it['email'] }} </h3>
+  <h3 class="uk-text-center_ uk-margin-large-left"><strong>Messages to: </strong> {{ $it['fname'] }} {{ $it['lname'] }} | {{ $it['email'] }} </h3>
 </div>
 @break
 @endforeach
 
-<table id="messageTable" class="uk-table uk-table-middle uk-table-divider uk-table-hover">
+<table id="messageTable" class="uk-table uk-table-hover uk-table-middle uk-table-divider">
   @if(count($item) === 0 )
   <thead>
     <tr>
@@ -29,10 +29,10 @@
   @else
   <thead>
     <tr>
-      <th class="uk-width-small">#</th>
-      <th>Contact</th>
-      <th>Subject</th>
-      <th class="uk-width-small"></th>
+      <th class="uk-table-shrink">#</th>
+      <th class="uk-table-expand">Contact</th>
+      <th class="uk-table-expand">Subject</th>
+      <th class="uk-table-shrink"></th>
     </tr>
   </thead>
   <tbody>
@@ -89,14 +89,14 @@
 
           <div class="uk-margin">
             <div uk-form-custom="target: > * > span:last-child"> To:
-              <select id="messageRecipient" class="uk-input">
+              <select id="messageRecipient" class="uk-input uk-disabled">
                 <option value="">Select a Contact</option>
                 @foreach ($contacts as $c)
                 <option value="{{ $c['id'] }}">{{ $c['fname'] }} {{ $c['lname'] }} | {{ $c['email'] }}</option>
                 @endforeach
               </select>
               <span class="uk-link">
-                <span uk-icon="icon: pencil"></span>
+                <span uk-icon="icon: user"></span>
                 <span></span>
               </span>
             </div>

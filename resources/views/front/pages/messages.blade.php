@@ -89,7 +89,7 @@
                 @endforeach
               </select>
               <span class="uk-link">
-                <span uk-icon="icon: pencil"></span>
+                <span uk-icon="icon: user"></span>
                 <span></span>
               </span>
             </div>
